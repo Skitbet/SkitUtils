@@ -6,6 +6,20 @@ type LayoutProps = {
 };
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  // State to toggle the mobile menu visibility
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  // Toggle function for mobile menu
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  // Toggle function for the dropdown
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-900">
       <header className="bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white shadow-lg">
@@ -42,32 +56,32 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </Link>
 
                 <div className="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity visibility-hidden group-hover:visible">
-                  <ul className="text-gray-300">
-                    <li>
-                      <Link
-                        href="/pfp/roblox"
-                        className="block px-4 py-3 hover:bg-blue-700 transition-colors"
-                      >
-                        Roblox
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/discord"
-                        className="block px-4 py-3 hover:bg-blue-700 transition-colors"
-                      >
-                        Discord (Soon)
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
+                    <ul className="text-gray-300">
+                      <li>
+                        <Link
+                          href="/pfp/roblox"
+                          className="block px-4 py-3 hover:bg-blue-700 transition-colors"
+                        >
+                          Roblox
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/pfp/discord"
+                          className="block px-4 py-3 hover:bg-blue-700 transition-colors"
+                        >
+                          Discord
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
               </div>
             </div>
 
             {/* Mobile Navbar Toggle */}
             <button
               className="md:hidden text-white focus:outline-none"
-              onClick={() => {}}
+              onClick={toggleMobileMenu}
             >
               <svg
                 className="w-6 h-6"
@@ -85,6 +99,36 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </svg>
             </button>
           </div>
+
+          {/* Mobile Menu */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden mt-4 space-y-4 bg-gray-800 text-gray-300 px-4 py-2 rounded-lg shadow-lg">
+              <button
+                onClick={toggleDropdown}
+                className="w-full text-left px-4 py-3 hover:bg-blue-700 transition-colors"
+              >
+                Profile Pictures
+              </button>
+
+              {/* Mobile Dropdown for Profile Pictures */}
+              {isDropdownOpen && (
+                <div className="space-y-2">
+                  <Link
+                    href="/pfp/roblox"
+                    className="block px-4 py-3 hover:bg-blue-700 transition-colors"
+                  >
+                    Roblox
+                  </Link>
+                  <Link
+                    href="/pfp/discord"
+                    className="block px-4 py-3 hover:bg-blue-700 transition-colors"
+                  >
+                    Discord
+                  </Link>
+                </div>
+              )}
+            </div>
+          )}
         </nav>
       </header>
 

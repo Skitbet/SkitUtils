@@ -28,13 +28,13 @@ const PfpPage: NextPage = () => {
           </div>
 
           <div className="bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-xs text-center">
-            <h2 className="text-xl font-semibold text-blue-400 mb-4">Discord PFPs (Soon)</h2>
-            <p className="text-gray-300 mb-4">Coming soon: Get someones PFP via their Discord ID.</p>
+            <h2 className="text-xl font-semibold text-blue-400 mb-4">Discord PFPs</h2>
+            <p className="text-gray-300 mb-4">Get someones PFP via their Discord ID.</p>
             <a
               href="/pfp/discord"
-              className="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md transform transition-all hover:scale-105"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md transform transition-all hover:scale-105"
             >
-              Coming Soon
+              Get Discord PFP
             </a>
           </div>
         </div>
