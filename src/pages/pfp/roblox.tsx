@@ -69,6 +69,19 @@ const UserAvatar: React.FC<UserAvatarProps> = () => {
               />
             </div>
           )}
+          
+          {avatarUrl && (
+            <div className="mt-4">
+              <a
+                href={avatarUrl}
+                download={`${username || "avatar"}.png`} // Dynamically naming the file based on username or a fallback
+                className="inline-block bg-green-600 hover:bg-green-700 text-white py-3 px-8 rounded-lg shadow-md transform transition-all hover:scale-105"
+              >
+                Download Avatar
+              </a>
+            </div>
+          )}
+
         </div>
 
         <div className="mt-8 text-center">
