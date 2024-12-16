@@ -4,12 +4,36 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { userId } = req.query;
 
   if (!userId || Array.isArray(userId)) {
-    return res.status(400).json({ error: "User ID is required" });
+    return res.status(400).json({ error: "User ID or username is required" });
   }
 
   try {
-    // Fetch user details from Roblox
-    const userResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`);
+    let userIdToFetch: string;
+
+    // Check if the userId is a number (ID) or a string (username)
+    if (/^\d+$/.test(userId)) {
+      // If it's a number (ID), use it directly
+      userIdToFetch = userId;
+    } else {
+      // If it's a string (username), search for the user using the Roblox search API
+      const searchResponse = await fetch(`https://users.roblox.com/v1/users/search?keyword=${userId}`);
+      if (!searchResponse.ok) {
+        throw new Error("Failed to search for user");
+      }
+
+      const searchData = await searchResponse.json();
+
+      // If no user is found, return an error
+      if (searchData.data.length === 0) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      // Get the first user from the search results
+      userIdToFetch = searchData.data[0].id.toString();
+    }
+
+    // Fetch user details using the userId
+    const userResponse = await fetch(`https://users.roblox.com/v1/users/${userIdToFetch}`);
     if (!userResponse.ok) {
       throw new Error("Failed to fetch user data");
     }
