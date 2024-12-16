@@ -20,7 +20,7 @@ const Home: NextPage = () => {
             href="/pfp"
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md transform transition-transform hover:scale-110"
           >
-            Get Profile Picture
+            PFP Utilies
           </a>
           <a
             href="/"

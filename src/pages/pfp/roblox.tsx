@@ -84,12 +84,12 @@ const UserAvatar: React.FC<UserAvatarProps> = () => {
 
         </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-8 mb-10 w-full text-center">
           <a
             href="/pfp"
-            className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md transform transition-all hover:scale-105"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-purple-600 hover:to-blue-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md transform transition-transform duration-200 hover:scale-105"
           >
-            Go to PFP Page
+            Back to Homepage
           </a>
         </div>
       </div>

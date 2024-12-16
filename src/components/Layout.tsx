@@ -62,7 +62,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                           href="/pfp/roblox"
                           className="block px-4 py-3 hover:bg-blue-700 transition-colors"
                         >
-                          Roblox
+                          Grab Roblox PFP
                         </Link>
                       </li>
                       <li>
@@ -70,7 +70,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                           href="/pfp/discord"
                           className="block px-4 py-3 hover:bg-blue-700 transition-colors"
                         >
-                          Discord
+                          Grab Discord PFP
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/pfp/lgbtfy"
+                          className="block px-4 py-3 hover:bg-blue-700 transition-colors"
+                        >
+                          LGBTQ-fy
                         </Link>
                       </li>
                     </ul>
@@ -117,13 +125,19 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     href="/pfp/roblox"
                     className="block px-4 py-3 hover:bg-blue-700 transition-colors"
                   >
-                    Roblox
+                    Grab Roblox PFP
                   </Link>
                   <Link
                     href="/pfp/discord"
                     className="block px-4 py-3 hover:bg-blue-700 transition-colors"
                   >
-                    Discord
+                    Grab Discord PFP
+                  </Link>
+                  <Link
+                    href="/pfp/lgbtfy"
+                    className="block px-4 py-3 hover:bg-blue-700 transition-colors"
+                  >
+                    LGBTQ-fy
                   </Link>
                 </div>
               )}

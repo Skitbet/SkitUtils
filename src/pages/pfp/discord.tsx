@@ -10,8 +10,8 @@ const UserAvatar: React.FC<UserAvatarProps> = () => {
   const [buttonText, setButtonText] = useState<string | null>("Get Picture");
 
   const fetchAvatar = async () => {
-    setUsername(null);
-    setAvatarUrl(null);
+    setUsername(null); // Clear previous username
+    setAvatarUrl(null); // Clear previous avatar
     try {
       setButtonText("Loading...");
       const response = await fetch(`/api/pfps/discord?userId=${userId}`);
@@ -28,35 +28,34 @@ const UserAvatar: React.FC<UserAvatarProps> = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col justify-center items-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white px-6 sm:px-12">
+      <div className="flex flex-col justify-center items-center min-h-screen bg-gray-900 text-white px-6 sm:px-12 overflow-hidden">
         <div className="text-center max-w-3xl mb-8">
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 text-blue-400">
             Discord Profile Picture (PFP)
           </h1>
-          <p className="text-lg md:text-xl text-gray-300 mb-8">
-            Enter a Discord user ID to retrieve their profile picture effortlessly.
+          <p className="text-lg md:text-xl mb-8">
+            Enter a Discord user's id to get their profile picture!
           </p>
         </div>
 
-        <div className="bg-gray-800 bg-opacity-90 p-8 rounded-2xl shadow-lg w-full max-w-lg text-center">
+        <div className="bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-lg text-center overflow-y-auto">
           <input
             type="text"
             placeholder="Enter Discord User ID"
-            className="text-black w-full px-4 py-3 mb-6 border-2 border-gray-600 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-500 focus:border-transparent transition-all"
+            className="text-black w-full px-4 py-3 mb-4 border-2 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             value={userId}
             onChange={(e) => setUserId(e.target.value)}
           />
-
           <button
-            className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white py-3 rounded-lg font-semibold shadow-md transform transition-transform duration-200 hover:scale-105"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition duration-300"
             onClick={fetchAvatar}
           >
             {buttonText}
           </button>
 
           {username && (
-            <p className="text-xl mt-6 text-gray-300">
-              Username: <span className="font-semibold text-white">{username}</span>
+            <p className="text-xl mt-4 text-center text-gray-300">
+              Username: <span className="font-semibold">{username}</span>
             </p>
           )}
 
@@ -65,17 +64,17 @@ const UserAvatar: React.FC<UserAvatarProps> = () => {
               <img
                 src={avatarUrl}
                 alt="Discord Avatar"
-                className="w-64 h-64 object-cover rounded-lg border-4 border-blue-500 shadow-lg transition-transform transform hover:scale-105"
+                className="w-64 h-64 object-cover border-2 border-white shadow-xl"
               />
             </div>
           )}
 
           {avatarUrl && (
-            <div className="mt-6">
+            <div className="mt-4">
               <a
                 href={avatarUrl}
-                download={`${username || "avatar"}.png`}
-                className="inline-block bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-semibold shadow-md transform transition-transform duration-200 hover:scale-105"
+                download={`${username || "avatar"}.png`} // Dynamically naming the file based on username or a fallback
+                className="inline-block bg-green-600 hover:bg-green-700 text-white py-3 px-8 rounded-lg shadow-md transform transition-all hover:scale-105"
               >
                 Download Avatar
               </a>
@@ -83,12 +82,12 @@ const UserAvatar: React.FC<UserAvatarProps> = () => {
           )}
         </div>
 
-        <div className="mt-10 text-center">
+        <div className="mt-8 mb-10 w-full text-center">
           <a
             href="/pfp"
             className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-purple-600 hover:to-blue-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md transform transition-transform duration-200 hover:scale-105"
           >
-            Go to PFP Page
+            Back to Homepage
           </a>
         </div>
       </div>

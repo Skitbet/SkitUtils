@@ -37,6 +37,17 @@ const PfpPage: NextPage = () => {
               Get Discord PFP
             </a>
           </div>
+
+          <div className="bg-gray-800 p-6 rounded-xl shadow-lg w-full max-w-xs text-center transform transition-all hover:scale-105 hover:shadow-2xl">
+            <h2 className="text-xl font-semibold text-blue-400 mb-4">LGBTfy PFPs</h2>
+            <p className="text-gray-300 mb-4">Express your sexuality with your PFP!</p>
+            <a
+              href="/pfp/lgbtfy"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition-transform transform hover:scale-110"
+            >
+              LGBTQfy your PFP
+            </a>
+          </div>
         </div>
       </div>
     </Layout>
