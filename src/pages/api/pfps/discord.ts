@@ -11,7 +11,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(400).json({ error: "User ID or username is required" });
   }
 
-  console.log(TOKEN);
   try {
     const userResponse = await fetch(`https://discord.com/api/v10/users/${userId}`, {
         headers: {
@@ -19,8 +18,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             'Content-Type': 'application/json' // Ensure the content type is set to JSON
           }
     });
-
-    console.log(userResponse)
 
     if (!userResponse.ok) {
       throw new Error("Failed to fetch user data");
@@ -36,7 +33,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Return the username and avatar image URL
     res.status(200).json({
-      username: userData.name,
+      username: userData.username,
       avatarUrl: avatarUrl,
     });
   } catch (err: any) {
