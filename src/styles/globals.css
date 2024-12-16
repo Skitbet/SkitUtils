@@ -1,0 +1,13 @@
+/* globals.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* Custom Tailwind styles can go here */
+}
+
+@layer utilities {
+  /* Custom utilities can go here */
+}
