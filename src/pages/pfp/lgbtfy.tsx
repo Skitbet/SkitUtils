@@ -1,22 +1,22 @@
-import Layout from "@/components/Layout";
-import { getFlagColors } from "@/utils/gay";
-import React, { useState, useRef, useEffect } from "react";
+import Layout from '@/components/Layout';
+import { getFlagColors } from '@/utils/gay';
+import React, { useState, useRef, useEffect } from 'react';
 
 const RainbowPFPGenerator = () => {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
   const [isImageEmpty, setIsImageEmpty] = useState<boolean>(false);
   const [rainbowColors, setRainbowColors] = useState<string[]>([
-    "#FF0000", // Red
-    "#FF7F00", // Orange
-    "#FFFF00", // Yellow
-    "#00FF00", // Green
-    "#0000FF", // Blue
-    "#4B0082", // Indigo
-    "#8B00FF", // Violet
-  ]); // Default: Pride rainbow
-  const [rainbowWidth, setRainbowWidth] = useState<number>(50); // Default thickness
-  const [rainbowReps, setRainbowReps] = useState<number>(1); // Default to 1, so it draws once.
+    '#FF0000',
+    '#FF7F00',
+    '#FFFF00',
+    '#00FF00',
+    '#0000FF',
+    '#4B0082',
+    '#8B00FF',
+  ]);
+  const [rainbowWidth, setRainbowWidth] = useState<number>(50);
+  const [rainbowReps, setRainbowReps] = useState<number>(1);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -40,8 +40,7 @@ const RainbowPFPGenerator = () => {
   };
 
   const handleRainbowTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
-    setRainbowColors(getFlagColors(value));
+    setRainbowColors(getFlagColors(e.target.value));
   };
 
   useEffect(() => {
@@ -52,51 +51,60 @@ const RainbowPFPGenerator = () => {
 
   const drawRainbowRing = (img: HTMLImageElement) => {
     const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
+    const ctx = canvas?.getContext('2d');
     if (!ctx || !canvas) return;
-  
+
     const canvasSize = 500;
     canvas.width = canvasSize;
     canvas.height = canvasSize;
-  
+
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     const radius = Math.min(centerX, centerY);
-  
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
-    // Clip the canvas for the circular shape
+
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
     ctx.clip();
     ctx.drawImage(img, 0, 0, canvasSize, canvasSize);
     ctx.restore();
-  
-    // Repeat the rainbow colors based on the slider value
+
     const colors = [];
     for (let i = 0; i < rainbowReps; i++) {
-        colors.push(...rainbowColors);
+      colors.push(...rainbowColors);
     }
-  
+
     const segmentWidth = (2 * Math.PI) / colors.length;
 
     colors.forEach((color, index) => {
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius, index * segmentWidth, (index + 1) * segmentWidth);
-        ctx.arc(centerX, centerY, radius - rainbowWidth, (index + 1) * segmentWidth, index * segmentWidth, true);
-        ctx.closePath();
-        ctx.fillStyle = color;
-        ctx.fill();
+      ctx.beginPath();
+      ctx.arc(
+        centerX,
+        centerY,
+        radius,
+        index * segmentWidth,
+        (index + 1) * segmentWidth,
+      );
+      ctx.arc(
+        centerX,
+        centerY,
+        radius - rainbowWidth,
+        (index + 1) * segmentWidth,
+        index * segmentWidth,
+        true,
+      );
+      ctx.closePath();
+      ctx.fillStyle = color;
+      ctx.fill();
     });
   };
-
-  
 
   const downloadImage = () => {
     const canvas = canvasRef.current;
     if (canvas) {
-      const link = document.createElement("a");
-      link.download = "rainbow-pfp.png";
+      const link = document.createElement('a');
+      link.download = 'rainbow-pfp.png';
       link.href = canvas.toDataURL();
       link.click();
     }
@@ -104,101 +112,184 @@ const RainbowPFPGenerator = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col justify-center items-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white px-6 sm:px-12">
-        <div className="text-center max-w-3xl mb-8">
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+      <div
+        className='flex flex-col justify-center items-center min-h-screen px-6 sm:px-12 py-12'
+        style={{ backgroundColor: '#36393f', color: '#dcddde' }}
+      >
+        {/* Header card */}
+        <div
+          className='text-center max-w-2xl w-full rounded-lg p-8 mb-6'
+          style={{
+            backgroundColor: '#2f3136',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+          }}
+        >
+          <div
+            className='w-16 h-1 rounded-full mx-auto mb-6'
+            style={{ backgroundColor: '#5865f2' }}
+          />
+          <h1
+            className='text-4xl md:text-5xl font-extrabold mb-3 tracking-tight'
+            style={{ color: '#ffffff' }}
+          >
             LGBT-fy Profile Picture
           </h1>
-          <p className="text-lg md:text-xl text-gray-300 mb-8">
-            Upload your profile picture!
+          <p className='text-base md:text-lg' style={{ color: '#b9bbbe' }}>
+            Upload your profile picture and add a pride flag ring!
           </p>
         </div>
 
-        <div className="bg-gray-800 bg-opacity-90 p-8 rounded-2xl shadow-lg w-full max-w-lg text-center">
+        {/* Main tool card */}
+        <div
+          className='w-full max-w-lg rounded-lg p-8 text-center'
+          style={{
+            backgroundColor: '#2f3136',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+          }}
+        >
+          {/* Upload button */}
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="w-1/2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white py-3 rounded-lg font-semibold shadow-md transform transition-transform duration-200 hover:scale-105 mb-6"
+            className='w-1/2 font-semibold py-3 rounded text-white transition-all duration-150 mb-6'
+            style={{ backgroundColor: '#5865f2' }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.backgroundColor = '#4752c4')
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.backgroundColor = '#5865f2')
+            }
           >
             Upload Image
           </button>
 
           <input
             ref={fileInputRef}
-            type="file"
-            accept="image/*"
+            type='file'
+            accept='image/*'
             onChange={handleFileUpload}
-            className="hidden"
+            className='hidden'
           />
 
           {isImageEmpty && (
-            <div className="text-red-500 text-lg mb-6">Please upload a valid image.</div>
+            <div className='mb-6' style={{ color: '#ed4245' }}>
+              Please upload a valid image.
+            </div>
           )}
 
           {isImageLoaded ? (
             <>
-              <canvas ref={canvasRef} className="border border-none rounded mb-6 mx-auto h-72" />
+              <canvas
+                ref={canvasRef}
+                className='rounded mb-6 mx-auto h-72'
+                style={{ border: '1px solid #202225' }}
+              />
               <button
                 onClick={downloadImage}
-                className="w-full inline-block bg-green-600 hover:bg-green-700 text-white py-3 px-8 rounded-lg shadow-md transform transition-all hover:scale-105"
+                className='w-full font-semibold py-3 px-8 rounded text-white transition-all duration-150'
+                style={{ backgroundColor: '#3ba55d' }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = '#2d7d46')
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor = '#3ba55d')
+                }
               >
                 Download Image
               </button>
             </>
           ) : (
-            <div className="text-gray-400 mb-6">No image uploaded yet. Please upload an image to proceed.</div>
+            <div className='mb-6' style={{ color: '#72767d' }}>
+              No image uploaded yet. Please upload an image to proceed.
+            </div>
           )}
 
-          {/* Rainbow thickness slider */}
-          <div className="my-4">
-            <label className="text-white mr-4">Outline Thickness</label>
+          {/* Divider */}
+          <div className='my-6' style={{ borderTop: '1px solid #40444b' }} />
+
+          {/* Outline Thickness */}
+          <div className='my-4 text-left'>
+            <label
+              className='block mb-2 text-sm font-semibold'
+              style={{ color: '#b9bbbe' }}
+            >
+              Outline Thickness
+            </label>
             <input
-              type="range"
-              min="10"
-              max="100"
+              type='range'
+              min='10'
+              max='100'
               value={rainbowWidth}
               onChange={(e) => setRainbowWidth(parseInt(e.target.value))}
-              className="w-full"
+              className='w-full accent-indigo-500'
+              style={{ accentColor: '#5865f2' }}
             />
           </div>
 
-          <div className="my-4">
-            <label className="text-white mr-4">Flag Repetitions</label>
+          {/* Flag Repetitions */}
+          <div className='my-4 text-left'>
+            <label
+              className='block mb-2 text-sm font-semibold'
+              style={{ color: '#b9bbbe' }}
+            >
+              Flag Repetitions
+            </label>
             <input
-                type="range"
-                min="1"
-                max="5" // You can set the maximum repetitions you want
-                value={rainbowReps}
-                onChange={(e) => setRainbowReps(parseInt(e.target.value))}
-                className="w-full"
+              type='range'
+              min='1'
+              max='5'
+              value={rainbowReps}
+              onChange={(e) => setRainbowReps(parseInt(e.target.value))}
+              className='w-full'
+              style={{ accentColor: '#5865f2' }}
             />
           </div>
 
-          {/* Rainbow type selector */}
-          <div className="my-4">
-            <label className="text-white mr-4">Select Flag Type</label>
+          {/* Flag Type Selector */}
+          <div className='my-4 text-left'>
+            <label
+              className='block mb-2 text-sm font-semibold'
+              style={{ color: '#b9bbbe' }}
+            >
+              Select Flag Type
+            </label>
             <select
               onChange={handleRainbowTypeChange}
-              className="bg-gray-700 text-white px-4 py-2 rounded-lg"
+              className='w-full px-4 py-2 rounded text-white'
+              style={{
+                backgroundColor: '#202225',
+                border: '1px solid #40444b',
+                color: '#dcddde',
+              }}
             >
-              <option value="pride">Pride</option>
-                <option value="bisexual">Bisexual</option>
-                <option value="pansexual">Pansexual</option>
-                <option value="transgender">Transgender</option>
-                <option value="asexual">Asexual</option>
-                <option value="genderfluid">Genderfluid</option>
-                <option value="lesbian">Lesbian</option>
-                <option value="nonbinary">Nonbinary</option>
-                <option value="queer">Queer</option>
-                <option value="intersex">Intersex</option>
+              <option value='pride'>Pride</option>
+              <option value='lesbian'>Lesbian</option>
+              <option value='mlm'>MLM</option>
+              <option value='bisexual'>Bisexual</option>
+              <option value='transgender'>Transgender</option>
+              <option value='pansexual'>Pansexual</option>
+              <option value='asexual'>Asexual</option>
+              <option value='genderfluid'>Genderfluid</option>
+              <option value='nonbinary'>Nonbinary</option>
+              <option value='queer'>Queer</option>
+              <option value='intersex'>Intersex</option>
             </select>
           </div>
         </div>
-        <div className="mt-8 mb-10 w-full text-center">
+
+        {/* Back button */}
+        <div className='mt-6 mb-10'>
           <a
-            href="/pfp"
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-purple-600 hover:to-blue-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md transform transition-transform duration-200 hover:scale-105"
+            href='/pfp'
+            className='font-semibold py-3 px-8 rounded text-white transition-all duration-150 inline-block'
+            style={{ backgroundColor: '#4f545c' }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.backgroundColor = '#5d6269')
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.backgroundColor = '#4f545c')
+            }
           >
-            Back to Homepage
+            ← Back to Homepage
           </a>
         </div>
       </div>

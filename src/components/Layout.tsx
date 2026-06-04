@@ -1,144 +1,196 @@
-import { ReactNode, useState } from "react";
-import Link from "next/link";
+import { ReactNode, useState } from 'react';
+import Link from 'next/link';
 
 type LayoutProps = {
   children: ReactNode;
 };
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  // State to toggle the mobile menu visibility
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  // Toggle function for mobile menu
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  // Toggle function for the dropdown
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
+  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-900">
-      <header className="bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white shadow-lg">
-        <nav className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-4">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-6">
-              <Link href="/" className="text-3xl font-semibold hover:text-blue-300 transition">
-                Skitty Utils
-              </Link>
-            </div>
+    <div
+      className='flex flex-col min-h-screen'
+      style={{ backgroundColor: '#36393f' }}
+    >
+      <header
+        style={{
+          backgroundColor: '#202225',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.4)',
+        }}
+      >
+        <nav className='max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-3'>
+          <div className='flex justify-between items-center'>
+            {/* Logo */}
+            <Link
+              href='/'
+              className='text-2xl font-bold transition'
+              style={{ color: '#ffffff' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = '#5865f2')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = '#ffffff')}
+            >
+              Skitty Utils
+            </Link>
 
             {/* Desktop Navbar */}
-            <div className="hidden md:flex space-x-6">
-              <div className="relative group">
+            <div className='hidden md:flex items-center space-x-2'>
+              <div className='relative group'>
                 <Link
-                  href="/pfp"
-                  className="text-lg font-medium hover:text-blue-300 focus:outline-none transition flex items-center space-x-2"
+                  href='/pfp'
+                  className='flex items-center space-x-1 px-3 py-2 rounded text-sm font-medium transition'
+                  style={{ color: '#dcddde' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#40444b';
+                    e.currentTarget.style.color = '#ffffff';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                    e.currentTarget.style.color = '#dcddde';
+                  }}
                 >
                   <span>Profile Pictures</span>
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    className="w-4 h-4 transform transition-transform"
+                    xmlns='http://www.w3.org/2000/svg'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                    className='w-3 h-3'
                   >
                     <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    ></path>
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='2'
+                      d='M19 9l-7 7-7-7'
+                    />
                   </svg>
                 </Link>
 
-                <div className="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity visibility-hidden group-hover:visible">
-                    <ul className="text-gray-300">
-                      <li>
+                {/* Desktop Dropdown */}
+                <div
+                  className='absolute right-0 mt-1 w-48 rounded opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-opacity z-50'
+                  style={{
+                    backgroundColor: '#18191c',
+                    border: '1px solid #40444b',
+                    boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
+                  }}
+                >
+                  <ul>
+                    {[
+                      { href: '/pfp/roblox', label: 'Grab Roblox PFP' },
+                      { href: '/pfp/discord', label: 'Grab Discord PFP' },
+                      { href: '/pfp/lgbtfy', label: 'LGBTQ-fy' },
+                    ].map((item) => (
+                      <li key={item.href}>
                         <Link
-                          href="/pfp/roblox"
-                          className="block px-4 py-3 hover:bg-blue-700 transition-colors"
+                          href={item.href}
+                          className='block px-4 py-2 text-sm transition'
+                          style={{ color: '#dcddde' }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = '#5865f2';
+                            e.currentTarget.style.color = '#ffffff';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor =
+                              'transparent';
+                            e.currentTarget.style.color = '#dcddde';
+                          }}
                         >
-                          Grab Roblox PFP
+                          {item.label}
                         </Link>
                       </li>
-                      <li>
-                        <Link
-                          href="/pfp/discord"
-                          className="block px-4 py-3 hover:bg-blue-700 transition-colors"
-                        >
-                          Grab Discord PFP
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/pfp/lgbtfy"
-                          className="block px-4 py-3 hover:bg-blue-700 transition-colors"
-                        >
-                          LGBTQ-fy
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
 
-            {/* Mobile Navbar Toggle */}
+            {/* Mobile Toggle */}
             <button
-              className="md:hidden text-white focus:outline-none"
+              className='md:hidden focus:outline-none'
               onClick={toggleMobileMenu}
+              style={{ color: '#b9bbbe' }}
             >
               <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
+                className='w-6 h-6'
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
               >
                 <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                ></path>
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth='2'
+                  d='M4 6h16M4 12h16M4 18h16'
+                />
               </svg>
             </button>
           </div>
 
           {/* Mobile Menu */}
           {isMobileMenuOpen && (
-            <div className="md:hidden mt-4 space-y-4 bg-gray-800 text-gray-300 px-4 py-2 rounded-lg shadow-lg">
+            <div
+              className='md:hidden mt-3 rounded overflow-hidden'
+              style={{
+                backgroundColor: '#2f3136',
+                border: '1px solid #40444b',
+              }}
+            >
               <button
                 onClick={toggleDropdown}
-                className="w-full text-left px-4 py-3 hover:bg-blue-700 transition-colors"
+                className='w-full text-left px-4 py-3 text-sm font-medium flex justify-between items-center transition'
+                style={{ color: '#dcddde' }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = '#40444b')
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor = 'transparent')
+                }
               >
-                Profile Pictures
+                <span>Profile Pictures</span>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                  className={`w-3 h-3 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth='2'
+                    d='M19 9l-7 7-7-7'
+                  />
+                </svg>
               </button>
 
-              {/* Mobile Dropdown for Profile Pictures */}
               {isDropdownOpen && (
-                <div className="space-y-2">
-                  <Link
-                    href="/pfp/roblox"
-                    className="block px-4 py-3 hover:bg-blue-700 transition-colors"
-                  >
-                    Grab Roblox PFP
-                  </Link>
-                  <Link
-                    href="/pfp/discord"
-                    className="block px-4 py-3 hover:bg-blue-700 transition-colors"
-                  >
-                    Grab Discord PFP
-                  </Link>
-                  <Link
-                    href="/pfp/lgbtfy"
-                    className="block px-4 py-3 hover:bg-blue-700 transition-colors"
-                  >
-                    LGBTQ-fy
-                  </Link>
+                <div style={{ borderTop: '1px solid #40444b' }}>
+                  {[
+                    { href: '/pfp/roblox', label: 'Grab Roblox PFP' },
+                    { href: '/pfp/discord', label: 'Grab Discord PFP' },
+                    { href: '/pfp/lgbtfy', label: 'LGBTQ-fy' },
+                  ].map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className='block px-6 py-3 text-sm transition'
+                      style={{ color: '#b9bbbe' }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = '#5865f2';
+                        e.currentTarget.style.color = '#ffffff';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = 'transparent';
+                        e.currentTarget.style.color = '#b9bbbe';
+                      }}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
                 </div>
               )}
             </div>
@@ -146,8 +198,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </nav>
       </header>
 
-      {/* Page Content */}
-      <main className="flex-grow bg-gray-900 text-gray-100">{children}</main>
+      <main
+        className='flex-grow'
+        style={{ backgroundColor: '#36393f', color: '#dcddde' }}
+      >
+        {children}
+      </main>
     </div>
   );
 };

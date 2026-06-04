@@ -1,95 +1,174 @@
-import { useState } from "react";
-import Layout from "@/components/Layout";
+import { useState } from 'react';
+import Layout from '@/components/Layout';
 
 type UserAvatarProps = {};
 
 const UserAvatar: React.FC<UserAvatarProps> = () => {
-  const [userId, setUserId] = useState<string>("");
+  const [userId, setUserId] = useState<string>('');
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
-  const [buttonText, setButtonText] = useState<string | null>("Get Picture");
+  const [buttonText, setButtonText] = useState<string>('Get Picture');
+  const [isError, setIsError] = useState<boolean>(false);
 
   const fetchAvatar = async () => {
-    setUsername(null); // Clear previous username
-    setAvatarUrl(null); // Clear previous avatar
+    setUsername(null);
+    setAvatarUrl(null);
+    setIsError(false);
     try {
-      setButtonText("Loading...");
+      setButtonText('Loading...');
       const response = await fetch(`/api/pfps/roblox?userId=${userId}`);
-      if (!response.ok) throw new Error("User not found");
+      if (!response.ok) throw new Error('User not found');
 
       const data = await response.json();
       setUsername(data.username);
       setAvatarUrl(data.avatarUrl);
-      setButtonText("Get Picture");
+      setButtonText('Get Picture');
     } catch (err: any) {
-      setButtonText(err.message || "An error occurred");
+      setIsError(true);
+      setButtonText(err.message || 'An error occurred');
     }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') fetchAvatar();
   };
 
   return (
     <Layout>
-      <div className="flex flex-col justify-center items-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white px-6 sm:px-12">
-
-        <div className="text-center max-w-3xl mb-8">
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-            Roblox Profile Picture (PFP)
+      <div
+        className='flex flex-col justify-center items-center min-h-screen px-6 sm:px-12 py-12'
+        style={{ backgroundColor: '#36393f', color: '#dcddde' }}
+      >
+        {/* Header card */}
+        <div
+          className='text-center max-w-2xl w-full rounded-lg p-8 mb-6'
+          style={{
+            backgroundColor: '#2f3136',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+          }}
+        >
+          <div
+            className='w-16 h-1 rounded-full mx-auto mb-6'
+            style={{ backgroundColor: '#5865f2' }}
+          />
+          <h1
+            className='text-4xl md:text-5xl font-extrabold mb-3 tracking-tight'
+            style={{ color: '#ffffff' }}
+          >
+            Roblox PFP Grabber
           </h1>
-          <p className="text-lg md:text-xl mb-8 text-gray-300">
-            Enter a Roblox Username or ID to retrieve someone's profile picture!
+          <p className='text-base md:text-lg' style={{ color: '#b9bbbe' }}>
+            Enter a Roblox username or ID to retrieve their profile picture.
           </p>
         </div>
 
-        <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-lg text-center">
+        {/* Tool card */}
+        <div
+          className='w-full max-w-lg rounded-lg p-8'
+          style={{
+            backgroundColor: '#2f3136',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+          }}
+        >
           <input
-            type="text"
-            placeholder="Enter Roblox ID or Username"
-            className="text-black w-full px-4 py-3 mb-4 border-2 border-gray-700 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-500 focus:border-transparent transition duration-300"
+            type='text'
+            placeholder='Enter Roblox ID or Username'
+            className='w-full px-4 py-3 mb-3 rounded text-sm focus:outline-none'
+            style={{
+              backgroundColor: '#202225',
+              border: '1px solid #40444b',
+              color: '#dcddde',
+            }}
             value={userId}
             onChange={(e) => setUserId(e.target.value)}
+            onKeyDown={handleKeyDown}
+            onFocus={(e) =>
+              (e.currentTarget.style.border = '1px solid #5865f2')
+            }
+            onBlur={(e) => (e.currentTarget.style.border = '1px solid #40444b')}
           />
-          <button
-            className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white py-3 rounded-lg transition duration-300 transform hover:scale-105"
-            onClick={fetchAvatar}
-          >
-            {buttonText}
-          </button>
 
-          {username && (
-            <p className="text-xl mt-4 text-center text-gray-300">
-              Username: <span className="font-semibold text-white">{username}</span>
+          {isError && (
+            <p className='text-sm mb-3' style={{ color: '#ed4245' }}>
+              {buttonText}
             </p>
           )}
 
-          {avatarUrl && (
-            <div className="mt-6 flex justify-center">
-              <img
-                src={avatarUrl}
-                alt="Roblox Avatar"
-                className="rounded-full w-48 h-48 object-cover border-4 border-purple-500 shadow-xl transform transition-all hover:scale-110"
+          <button
+            className='w-full font-semibold py-3 rounded text-white transition-all duration-150'
+            style={{ backgroundColor: '#5865f2' }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.backgroundColor = '#4752c4')
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.backgroundColor = '#5865f2')
+            }
+            onClick={fetchAvatar}
+          >
+            {isError ? 'Get Picture' : buttonText}
+          </button>
+
+          {username && (
+            <>
+              <div
+                className='my-6'
+                style={{ borderTop: '1px solid #40444b' }}
               />
-            </div>
+              <p
+                className='text-sm mb-4 text-center'
+                style={{ color: '#b9bbbe' }}
+              >
+                Username:{' '}
+                <span className='font-semibold' style={{ color: '#ffffff' }}>
+                  {username}
+                </span>
+              </p>
+            </>
           )}
 
           {avatarUrl && (
-            <div className="mt-4">
+            <div className='flex flex-col items-center gap-4'>
+              <img
+                src={avatarUrl}
+                alt='Roblox Avatar'
+                className='w-48 h-48 object-cover rounded-full'
+                style={{
+                  border: '4px solid #5865f2',
+                  boxShadow: '0 0 24px rgba(88,101,242,0.4)',
+                }}
+              />
               <a
                 href={avatarUrl}
-                download={`${username || "avatar"}.png`} // Dynamically naming the file based on username or a fallback
-                className="inline-block bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 px-8 rounded-lg shadow-md transform transition-all hover:scale-105"
+                download={`${username || 'avatar'}.png`}
+                className='font-semibold py-3 px-8 rounded text-white transition-all duration-150 inline-block'
+                style={{ backgroundColor: '#3ba55d' }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = '#2d7d46')
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor = '#3ba55d')
+                }
               >
                 Download Avatar
               </a>
             </div>
           )}
-
         </div>
 
-        <div className="mt-8 mb-10 w-full text-center">
+        {/* Back button */}
+        <div className='mt-6 mb-10'>
           <a
-            href="/pfp"
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-purple-600 hover:to-blue-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md transform transition-transform duration-200 hover:scale-105"
+            href='/pfp'
+            className='font-semibold py-3 px-8 rounded text-white transition-all duration-150 inline-block'
+            style={{ backgroundColor: '#4f545c' }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.backgroundColor = '#5d6269')
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.backgroundColor = '#4f545c')
+            }
           >
-            Back to Homepage
+            ← Back to Homepage
           </a>
         </div>
       </div>

@@ -1,37 +1,76 @@
-import Layout from '@/components/Layout'
-import type { NextPage } from 'next'
+import Layout from '@/components/Layout';
+import type { NextPage } from 'next';
 
 const Home: NextPage = () => {
   return (
     <Layout>
-      <div className="flex flex-col justify-center items-center min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white px-6 sm:px-12">
-        
-        <div className="text-center max-w-3xl mb-8">
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 text-blue-400 drop-shadow-md">
-            Welcome to Skitty Utils
+      <div
+        className='flex flex-col justify-center items-center min-h-screen px-6 sm:px-12'
+        style={{ backgroundColor: '#36393f', color: '#dcddde' }}
+      >
+        {/* Card panel like a Discord embed */}
+        <div
+          className='text-center max-w-2xl w-full rounded-lg p-8 mb-8'
+          style={{
+            backgroundColor: '#2f3136',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+          }}
+        >
+          {/* Blurple top accent bar */}
+          <div
+            className='w-16 h-1 rounded-full mx-auto mb-6'
+            style={{ backgroundColor: '#5865f2' }}
+          />
+
+          <h1
+            className='text-4xl md:text-5xl font-extrabold mb-3 tracking-tight'
+            style={{ color: '#ffffff' }}
+          >
+            Skitty Utils
           </h1>
-          <p className="text-lg md:text-xl mb-8 text-gray-300">
-            Your go-to place for basic utilities like profile picture getters, and more tools coming soon!
+          <p className='text-base md:text-lg mb-0' style={{ color: '#b9bbbe' }}>
+            Your go-to place for basic utilities like profile picture getters,
+            and more tools coming soon!
           </p>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0 md:space-x-8">
+        {/* Buttons */}
+        <div className='flex flex-col md:flex-row items-center justify-center gap-4'>
           <a
-            href="/pfp"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md transform transition-transform hover:scale-110"
+            href='/pfp'
+            className='font-semibold py-3 px-8 rounded text-white transition-all duration-150'
+            style={{
+              backgroundColor: '#5865f2',
+            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.backgroundColor = '#4752c4')
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.backgroundColor = '#5865f2')
+            }
           >
-            PFP Utilies
+            PFP Utilities
           </a>
           <a
-            href="/"
-            className="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md transform transition-transform hover:scale-110"
+            href='/'
+            className='font-semibold py-3 px-8 rounded transition-all duration-150'
+            style={{
+              backgroundColor: '#4f545c',
+              color: '#dcddde',
+            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.backgroundColor = '#5d6269')
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.backgroundColor = '#4f545c')
+            }
           >
             Coming Soon
           </a>
         </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
