@@ -15,7 +15,7 @@ export const getFlagColors = (flag: string): string[] => {
     case 'pansexual':
       return ['#FF218C', '#FFD800', '#1D7BF2'];
     case 'transgender':
-      return ['#55CDFC', '#F7A8B8', '#55CDFC', '#F7A8B8'];
+      return ['#55CDFC', '#F7A8B8', '#FFFFFF','#55CDFC', '#F7A8B8'];
     case 'asexual':
       return ['#9B59B6', '#F1C40F', '#2ECC71', '#3498DB', '#34495E'];
     case 'genderfluid':
