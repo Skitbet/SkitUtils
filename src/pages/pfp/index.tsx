@@ -1,57 +1,63 @@
-import Layout from '@/components/Layout'
-import type { NextPage } from 'next'
+import Layout from '@/components/Layout';
+import Link from 'next/link';
+import type { NextPage } from 'next';
+
+const utilities = [
+  {
+    href: '/pfp/roblox',
+    title: 'Roblox PFPs',
+    description: "Get someone's PFP via their Roblox username or ID.",
+    action: 'Get Roblox PFP',
+  },
+  {
+    href: '/pfp/discord',
+    title: 'Discord PFPs',
+    description: "Get someone's PFP via their Discord ID.",
+    action: 'Get Discord PFP',
+  },
+  {
+    href: '/pfp/lgbtfy',
+    title: 'LGBT-fy PFPs',
+    description: 'Express yourself with a pride flag ring on your PFP!',
+    action: 'LGBT-fy your PFP',
+  },
+];
 
 const PfpPage: NextPage = () => {
   return (
     <Layout>
-      <div className="flex flex-col justify-center items-center min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white px-6 sm:px-12">
+      <div className='page-shell'>
+        <div className='page-container'>
+          <header className='page-header'>
+            <h1 className='page-title'>Get your profile picture here</h1>
+            <p className='page-description text-base sm:text-lg'>
+              Trying to find a profile picture someone uses? Access profile
+              pictures and create your own across a range of tools.
+            </p>
+          </header>
 
-        <div className="text-center max-w-3xl mb-8">
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 text-blue-400 drop-shadow-md">
-            Get Your Profile Picture (PFP) Here
-          </h1>
-          <p className="text-lg md:text-xl mb-8 text-gray-300">
-            Trying to find a profile picture someone uses? Here you can access profile pictures across many websites!
-          </p>
-        </div>
-
-        <div className="flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0 md:space-x-8 mb-12">
-          <div className="bg-gray-800 p-6 rounded-xl shadow-lg w-full max-w-xs text-center transform transition-all hover:scale-105 hover:shadow-2xl">
-            <h2 className="text-xl font-semibold text-blue-400 mb-4">Roblox PFPs</h2>
-            <p className="text-gray-300 mb-4">Get someone's PFP via their Roblox Username or ID.</p>
-            <a
-              href="/pfp/roblox"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition-transform transform hover:scale-110"
-            >
-              Get Roblox PFP
-            </a>
-          </div>
-
-          <div className="bg-gray-800 p-6 rounded-xl shadow-lg w-full max-w-xs text-center transform transition-all hover:scale-105 hover:shadow-2xl">
-            <h2 className="text-xl font-semibold text-blue-400 mb-4">Discord PFPs</h2>
-            <p className="text-gray-300 mb-4">Get someone's PFP via their Discord ID.</p>
-            <a
-              href="/pfp/discord"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition-transform transform hover:scale-110"
-            >
-              Get Discord PFP
-            </a>
-          </div>
-
-          <div className="bg-gray-800 p-6 rounded-xl shadow-lg w-full max-w-xs text-center transform transition-all hover:scale-105 hover:shadow-2xl">
-            <h2 className="text-xl font-semibold text-blue-400 mb-4">LGBTfy PFPs</h2>
-            <p className="text-gray-300 mb-4">Express your sexuality with your PFP!</p>
-            <a
-              href="/pfp/lgbtfy"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition-transform transform hover:scale-110"
-            >
-              LGBTQfy your PFP
-            </a>
+          <div className='grid gap-4 md:grid-cols-3'>
+            {utilities.map((utility) => (
+              <section
+                key={utility.href}
+                className='surface-card flex flex-col items-start p-6'
+              >
+                <h2 className='mb-3 text-xl font-bold' style={{ color: 'var(--color-accent)' }}>
+                  {utility.title}
+                </h2>
+                <p className='mb-6 flex-grow text-sm leading-relaxed' style={{ color: 'var(--color-muted)' }}>
+                  {utility.description}
+                </p>
+                <Link href={utility.href} className='button-primary w-full'>
+                  {utility.action}
+                </Link>
+              </section>
+            ))}
           </div>
         </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
 
-export default PfpPage
+export default PfpPage;

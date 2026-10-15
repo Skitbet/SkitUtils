@@ -35,77 +35,40 @@ const UserAvatar: React.FC<UserAvatarProps> = () => {
 
   return (
     <Layout>
-      <div
-        className='flex flex-col justify-center items-center min-h-screen px-6 sm:px-12 py-12'
-        style={{ backgroundColor: '#36393f', color: '#dcddde' }}
-      >
+      <div className='page-shell flex flex-col items-center'>
         {/* Header card */}
-        <div
-          className='text-center max-w-2xl w-full rounded-lg p-8 mb-6'
-          style={{
-            backgroundColor: '#2f3136',
-            boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
-          }}
-        >
-          <div
-            className='w-16 h-1 rounded-full mx-auto mb-6'
-            style={{ backgroundColor: '#5865f2' }}
-          />
-          <h1
-            className='text-4xl md:text-5xl font-extrabold mb-3 tracking-tight'
-            style={{ color: '#ffffff' }}
-          >
+        <div className='page-header w-full text-center'>
+          <div className='accent-rule' />
+          <h1 className='page-title'>
             Discord PFP Grabber
           </h1>
-          <p className='text-base md:text-lg' style={{ color: '#b9bbbe' }}>
+          <p className='page-description text-base md:text-lg'>
             Enter a Discord user's ID to fetch their profile picture.
           </p>
         </div>
 
         {/* Tool card */}
-        <div
-          className='w-full max-w-lg rounded-lg p-8'
-          style={{
-            backgroundColor: '#2f3136',
-            boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
-          }}
-        >
+        <div className='surface-card w-full max-w-xl p-6 sm:p-8'>
           {/* Input */}
           <input
             type='text'
             placeholder='Enter Discord User ID'
-            className='w-full px-4 py-3 mb-3 rounded text-sm focus:outline-none'
-            style={{
-              backgroundColor: '#202225',
-              border: '1px solid #40444b',
-              color: '#dcddde',
-            }}
+            className='themed-control mb-3 px-4 py-3 text-sm'
             value={userId}
             onChange={(e) => setUserId(e.target.value)}
             onKeyDown={handleKeyDown}
-            onFocus={(e) =>
-              (e.currentTarget.style.border = '1px solid #5865f2')
-            }
-            onBlur={(e) => (e.currentTarget.style.border = '1px solid #40444b')}
           />
 
           {/* Error message */}
           {isError && (
-            <p className='text-sm mb-3' style={{ color: '#ed4245' }}>
+            <p className='mb-3 text-sm' style={{ color: 'var(--color-error)' }}>
               {buttonText}
             </p>
           )}
 
           {/* Button */}
           <button
-            className='w-full font-semibold py-3 rounded text-white transition-all duration-150'
-            style={{ backgroundColor: '#5865f2' }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.backgroundColor = '#4752c4')
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.backgroundColor = '#5865f2')
-            }
+            className='button-primary w-full'
             onClick={fetchAvatar}
           >
             {isError ? 'Get Picture' : buttonText}
@@ -115,15 +78,15 @@ const UserAvatar: React.FC<UserAvatarProps> = () => {
           {username && (
             <>
               <div
-                className='my-6'
-                style={{ borderTop: '1px solid #40444b' }}
+                className='my-6 border-t'
+                style={{ borderColor: 'var(--color-border)' }}
               />
               <p
-                className='text-sm mb-4 text-center'
-                style={{ color: '#b9bbbe' }}
+                className='mb-4 text-center text-sm'
+                style={{ color: 'var(--color-muted)' }}
               >
                 Username:{' '}
-                <span className='font-semibold' style={{ color: '#ffffff' }}>
+                <span className='font-semibold' style={{ color: 'var(--color-text)' }}>
                   {username}
                 </span>
               </p>
@@ -137,21 +100,14 @@ const UserAvatar: React.FC<UserAvatarProps> = () => {
                 alt='Discord Avatar'
                 className='w-48 h-48 object-cover rounded-full'
                 style={{
-                  border: '4px solid #5865f2',
-                  boxShadow: '0 0 24px rgba(88,101,242,0.4)',
+                  border: '4px solid var(--color-accent)',
+                  boxShadow: '0 0 24px rgba(214,161,93,0.3)',
                 }}
               />
               <a
                 href={avatarUrl}
                 download={`${username || 'avatar'}.png`}
-                className='font-semibold py-3 px-8 rounded text-white transition-all duration-150 inline-block'
-                style={{ backgroundColor: '#3ba55d' }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.backgroundColor = '#2d7d46')
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.backgroundColor = '#3ba55d')
-                }
+                className='button-success'
               >
                 Download Avatar
               </a>
@@ -160,17 +116,10 @@ const UserAvatar: React.FC<UserAvatarProps> = () => {
         </div>
 
         {/* Back button */}
-        <div className='mt-6 mb-10'>
+        <div className='mb-10 mt-6'>
           <a
             href='/pfp'
-            className='font-semibold py-3 px-8 rounded text-white transition-all duration-150 inline-block'
-            style={{ backgroundColor: '#4f545c' }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.backgroundColor = '#5d6269')
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.backgroundColor = '#4f545c')
-            }
+            className='button-secondary'
           >
             ← Back to Homepage
           </a>

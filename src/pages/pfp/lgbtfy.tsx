@@ -112,52 +112,24 @@ const RainbowPFPGenerator = () => {
 
   return (
     <Layout>
-      <div
-        className='flex flex-col justify-center items-center min-h-screen px-6 sm:px-12 py-12'
-        style={{ backgroundColor: '#36393f', color: '#dcddde' }}
-      >
+      <div className='page-shell flex flex-col items-center'>
         {/* Header card */}
-        <div
-          className='text-center max-w-2xl w-full rounded-lg p-8 mb-6'
-          style={{
-            backgroundColor: '#2f3136',
-            boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
-          }}
-        >
-          <div
-            className='w-16 h-1 rounded-full mx-auto mb-6'
-            style={{ backgroundColor: '#5865f2' }}
-          />
-          <h1
-            className='text-4xl md:text-5xl font-extrabold mb-3 tracking-tight'
-            style={{ color: '#ffffff' }}
-          >
+        <div className='page-header w-full text-center'>
+          <div className='accent-rule' />
+          <h1 className='page-title'>
             LGBT-fy Profile Picture
           </h1>
-          <p className='text-base md:text-lg' style={{ color: '#b9bbbe' }}>
+          <p className='page-description text-base md:text-lg'>
             Upload your profile picture and add a pride flag ring!
           </p>
         </div>
 
         {/* Main tool card */}
-        <div
-          className='w-full max-w-lg rounded-lg p-8 text-center'
-          style={{
-            backgroundColor: '#2f3136',
-            boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
-          }}
-        >
+        <div className='surface-card w-full max-w-xl p-6 text-center sm:p-8'>
           {/* Upload button */}
           <button
             onClick={() => fileInputRef.current?.click()}
-            className='w-1/2 font-semibold py-3 rounded text-white transition-all duration-150 mb-6'
-            style={{ backgroundColor: '#5865f2' }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.backgroundColor = '#4752c4')
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.backgroundColor = '#5865f2')
-            }
+            className='button-primary mb-6'
           >
             Upload Image
           </button>
@@ -171,7 +143,7 @@ const RainbowPFPGenerator = () => {
           />
 
           {isImageEmpty && (
-            <div className='mb-6' style={{ color: '#ed4245' }}>
+            <div className='mb-6 text-sm' style={{ color: 'var(--color-error)' }}>
               Please upload a valid image.
             </div>
           )}
@@ -181,36 +153,29 @@ const RainbowPFPGenerator = () => {
               <canvas
                 ref={canvasRef}
                 className='rounded mb-6 mx-auto h-72'
-                style={{ border: '1px solid #202225' }}
+                style={{ border: '1px solid var(--color-border)' }}
               />
               <button
                 onClick={downloadImage}
-                className='w-full font-semibold py-3 px-8 rounded text-white transition-all duration-150'
-                style={{ backgroundColor: '#3ba55d' }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.backgroundColor = '#2d7d46')
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.backgroundColor = '#3ba55d')
-                }
+                className='button-success w-full'
               >
                 Download Image
               </button>
             </>
           ) : (
-            <div className='mb-6' style={{ color: '#72767d' }}>
+            <div className='mb-6 text-sm' style={{ color: 'var(--color-subtle)' }}>
               No image uploaded yet. Please upload an image to proceed.
             </div>
           )}
 
           {/* Divider */}
-          <div className='my-6' style={{ borderTop: '1px solid #40444b' }} />
+          <div className='my-6 border-t' style={{ borderColor: 'var(--color-border)' }} />
 
           {/* Outline Thickness */}
           <div className='my-4 text-left'>
             <label
               className='block mb-2 text-sm font-semibold'
-              style={{ color: '#b9bbbe' }}
+              style={{ color: 'var(--color-muted)' }}
             >
               Outline Thickness
             </label>
@@ -220,8 +185,8 @@ const RainbowPFPGenerator = () => {
               max='100'
               value={rainbowWidth}
               onChange={(e) => setRainbowWidth(parseInt(e.target.value))}
-              className='w-full accent-indigo-500'
-              style={{ accentColor: '#5865f2' }}
+              className='w-full'
+              style={{ accentColor: 'var(--color-accent)' }}
             />
           </div>
 
@@ -229,7 +194,7 @@ const RainbowPFPGenerator = () => {
           <div className='my-4 text-left'>
             <label
               className='block mb-2 text-sm font-semibold'
-              style={{ color: '#b9bbbe' }}
+              style={{ color: 'var(--color-muted)' }}
             >
               Flag Repetitions
             </label>
@@ -240,7 +205,7 @@ const RainbowPFPGenerator = () => {
               value={rainbowReps}
               onChange={(e) => setRainbowReps(parseInt(e.target.value))}
               className='w-full'
-              style={{ accentColor: '#5865f2' }}
+              style={{ accentColor: 'var(--color-accent)' }}
             />
           </div>
 
@@ -248,18 +213,13 @@ const RainbowPFPGenerator = () => {
           <div className='my-4 text-left'>
             <label
               className='block mb-2 text-sm font-semibold'
-              style={{ color: '#b9bbbe' }}
+              style={{ color: 'var(--color-muted)' }}
             >
               Select Flag Type
             </label>
             <select
               onChange={handleRainbowTypeChange}
-              className='w-full px-4 py-2 rounded text-white'
-              style={{
-                backgroundColor: '#202225',
-                border: '1px solid #40444b',
-                color: '#dcddde',
-              }}
+              className='themed-control px-4 py-2'
             >
               <option value='pride'>Pride</option>
               <option value='lesbian'>Lesbian</option>
@@ -280,14 +240,7 @@ const RainbowPFPGenerator = () => {
         <div className='mt-6 mb-10'>
           <a
             href='/pfp'
-            className='font-semibold py-3 px-8 rounded text-white transition-all duration-150 inline-block'
-            style={{ backgroundColor: '#4f545c' }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.backgroundColor = '#5d6269')
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.backgroundColor = '#4f545c')
-            }
+            className='button-secondary'
           >
             ← Back to Homepage
           </a>
