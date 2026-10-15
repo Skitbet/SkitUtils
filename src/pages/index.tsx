@@ -52,7 +52,7 @@ const Home: NextPage = () => {
             PFP Utilities
           </a>
           <a
-            href='/'
+            href='/games/edpi'
             className='font-semibold py-3 px-8 rounded transition-all duration-150'
             style={{
               backgroundColor: '#4f545c',
@@ -65,7 +65,7 @@ const Home: NextPage = () => {
               (e.currentTarget.style.backgroundColor = '#4f545c')
             }
           >
-            Coming Soon
+            eDPI Calculator
           </a>
         </div>
       </div>

@@ -8,6 +8,7 @@ type LayoutProps = {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isGamesDropdownOpen, setIsGamesDropdownOpen] = useState(false);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
@@ -106,6 +107,65 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   </ul>
                 </div>
               </div>
+              <div className='relative group'>
+                <Link
+                  href='/games/edpi'
+                  className='flex items-center space-x-1 px-3 py-2 rounded text-sm font-medium transition'
+                  style={{ color: '#dcddde' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#40444b';
+                    e.currentTarget.style.color = '#ffffff';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                    e.currentTarget.style.color = '#dcddde';
+                  }}
+                >
+                  <span>Games</span>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                    className='w-3 h-3'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='2'
+                      d='M19 9l-7 7-7-7'
+                    />
+                  </svg>
+                </Link>
+                <div
+                  className='absolute right-0 mt-1 w-48 rounded opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-opacity z-50'
+                  style={{
+                    backgroundColor: '#18191c',
+                    border: '1px solid #40444b',
+                    boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
+                  }}
+                >
+                  <ul>
+                    <li>
+                      <Link
+                        href='/games/edpi'
+                        className='block px-4 py-2 text-sm transition'
+                        style={{ color: '#dcddde' }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = '#5865f2';
+                          e.currentTarget.style.color = '#ffffff';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = 'transparent';
+                          e.currentTarget.style.color = '#dcddde';
+                        }}
+                      >
+                        eDPI Calculator (BETA)
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
 
             {/* Mobile Toggle */}
@@ -191,6 +251,54 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                       {item.label}
                     </Link>
                   ))}
+                </div>
+              )}
+
+              <button
+                onClick={() => setIsGamesDropdownOpen(!isGamesDropdownOpen)}
+                className='w-full text-left px-4 py-3 text-sm font-medium flex justify-between items-center transition'
+                style={{ color: '#dcddde' }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = '#40444b')
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor = 'transparent')
+                }
+              >
+                <span>Games</span>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                  className={`w-3 h-3 transition-transform ${isGamesDropdownOpen ? 'rotate-180' : ''}`}
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth='2'
+                    d='M19 9l-7 7-7-7'
+                  />
+                </svg>
+              </button>
+
+              {isGamesDropdownOpen && (
+                <div style={{ borderTop: '1px solid #40444b' }}>
+                  <Link
+                    href='/games/edpi'
+                    className='block px-6 py-3 text-sm transition'
+                    style={{ color: '#b9bbbe' }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#5865f2';
+                      e.currentTarget.style.color = '#ffffff';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                      e.currentTarget.style.color = '#b9bbbe';
+                    }}
+                  >
+                    eDPI Calculator (BETA)
+                  </Link>
                 </div>
               )}
             </div>
